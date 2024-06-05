@@ -14,8 +14,8 @@ namespace controleContasTeste
             public void DeveDepositar()
             {
                 //cenário
-                var cliente1 = new Cliente("João", "12345678901", 2000);
-                var conta1 = new Conta(1234, 1000, cliente1);
+                var cliente1 = new Cliente("João", "12345678901");
+                var conta1 = new Conta(1000, cliente1);
                 //Ação
                 conta1.Depositar(1000);
                 //verificação
@@ -27,12 +27,12 @@ namespace controleContasTeste
             public void DeveSacar()
             {
                 //cenário
-                var cliente1 = new Cliente("João", "12345678901", 2000);
-                var conta1 = new Conta(1234, 1000, cliente1);
+                var cliente1 = new Cliente("João", "12345678901");
+                var conta1 = new Conta(1000, cliente1);
                 //Ação
                 conta1.Sacar(500);
                 //verificação
-                Assert.AreEqual(499.90m, conta1.Saldo);
+                Assert.AreEqual(499.90, conta1.Saldo);
             }
 
             [TestMethod]
@@ -40,8 +40,8 @@ namespace controleContasTeste
             public void DeveFalharAoSacar()
             {
                 //cenário
-                var cliente1 = new Cliente("João", "12345678901", 2000);
-                var conta1 = new Conta(1234, 1000, cliente1);
+                var cliente1 = new Cliente("João", "12345678901");
+                var conta1 = new Conta(1000, cliente1);
                 //Ação
                 var ex = Assert.ThrowsException<OperacaoInvalidaException>(() => conta1.Sacar(1500));
                 //verificação
@@ -52,8 +52,8 @@ namespace controleContasTeste
             public void DeveFalharAoFazerDeposito()
             {
                 //cenário
-                var cliente1 = new Cliente("João", "12345678901", 2000);
-                var conta1 = new Conta(1234, 1000, cliente1);
+                var cliente1 = new Cliente("João", "12345678901");
+                var conta1 = new Conta(1000, cliente1);
                 //Ação
                 var ex = Assert.ThrowsException<OperacaoInvalidaException>(() => conta1.Depositar(-1));
                 //verificação
@@ -65,12 +65,12 @@ namespace controleContasTeste
             public void DeveTransferir()
             {
                 //cenário
-                var cliente1 = new Cliente("João", "12345678901", 2000);
-                var conta1 = new Conta(1234, 1000, cliente1);
-                var cliente2 = new Cliente("Maria", "12345678901", 2000);
-                var conta2 = new Conta(1235, 1000, cliente2);
+                var cliente1 = new Cliente("João", "12345678901");
+                var conta1 = new Conta(1000, cliente1);
+                var cliente2 = new Cliente("Maria", "12345678901");
+                var conta2 = new Conta(1000, cliente2);
                 //Ação
-                conta1.Transferir(100, conta2);
+                conta1.Transferir(conta2,100);
                 //verificação
                 Assert.AreEqual(900, conta1.Saldo);
                 Assert.AreEqual(1100, conta2.Saldo);
@@ -81,12 +81,12 @@ namespace controleContasTeste
             public void DeveFalharAoTransferir()
             {
                 //cenário
-                var cliente1 = new Cliente("João", "12345678901", 2000);
-                var conta1 = new Conta(1234, 1000, cliente1);
-                var cliente2 = new Cliente("Maria", "12345678901", 2000);
-                var conta2 = new Conta(1235, 1000, cliente2);
+                var cliente1 = new Cliente("João", "12345678901");
+                var conta1 = new Conta(1000, cliente1);
+                var cliente2 = new Cliente("Maria", "12345678901");
+                var conta2 = new Conta( 1000, cliente2);
                 //Ação
-                var ex = Assert.ThrowsException<OperacaoInvalidaException>(() => conta1.Transferir(2000, conta2));
+                var ex = Assert.ThrowsException<OperacaoInvalidaException>(() => conta1.Transferir(conta2,2000));
                 //verificação
                 Assert.AreEqual("Saldo insuficiente para transferência. Programa irá se encerrar", ex.Message);
             }
@@ -96,12 +96,12 @@ namespace controleContasTeste
             public void DeveFalharAoTransferirValorInvalido()
             {
                 //cenário
-                var cliente1 = new Cliente("João", "12345678901", 2000);
-                var conta1 = new Conta(1234, 1000, cliente1);
-                var cliente2 = new Cliente("Maria", "12345678901", 2000);
-                var conta2 = new Conta(1235, 1000, cliente2);
+                var cliente1 = new Cliente("João", "12345678901");
+                var conta1 = new Conta(1000, cliente1);
+                var cliente2 = new Cliente("Maria", "12345678901");
+                var conta2 = new Conta(1000, cliente2);
                 //Ação
-                var ex = Assert.ThrowsException<OperacaoInvalidaException>(() => conta1.Transferir(-1, conta2));
+                var ex = Assert.ThrowsException<OperacaoInvalidaException>(() => conta1.Transferir(conta2 ,- 1, ));
                 //verificação
                 Assert.AreEqual("O valor de transferência é inválido. Programa irá se encerrar", ex.Message);
             }
